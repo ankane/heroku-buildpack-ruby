@@ -110,6 +110,7 @@ WARNING
 
           cleanup_assets_cache
           @cache.store public_assets_folder
+          cleanup_webpacker_cache
           @cache.store public_packs_folder
           @cache.store default_assets_cache
           @cache.store default_webpacker_cache
@@ -123,6 +124,12 @@ WARNING
   def cleanup_assets_cache
     instrument "rails4.cleanup_assets_cache" do
       LanguagePack::Helpers::StaleFileCleaner.new(default_assets_cache).clean_over(ASSETS_CACHE_LIMIT)
+    end
+  end
+
+  def cleanup_webpacker_cache
+    instrument "rails4.cleanup_webpacker_cache" do
+      LanguagePack::Helpers::StaleFileCleaner.new(default_webpacker_cache).clean_over(ASSETS_CACHE_LIMIT)
     end
   end
 end
